@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+_top_lvl="$(git rev-parse --show-toplevel)"
+_msg=`cat "$_top_lvl"/.git/COMMIT_EDITMSG`
+
+_public_br="master"
+_src_br="src"
+
+_curr_br="$(grep "^*" < <(git branch) | cut -d' ' -f2)"
+
+#TODO only files in entries
+if [[ $_curr_br == $_src_br ]]; then 
+    _build_dir="$(mktemp -d /tmp/_site.XXXXXXXX)"
+    _old_dir="$PWD"
+    cd "$_top_lvl"
+    phr up . "$_build_dir"
+    git checkout "$_public_br"
+    cp -rf "$_build_dir"/* .
+    git add .
+    git commit -a -m "[AUTOUPDATE] $_msg @ $(date +"%F %T")"
+    git checkout "$_src_br"
+    cd "$_old_dir"
+    rm -rf "$_build_dir"
+fi
