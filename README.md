@@ -1,11 +1,22 @@
-Here will be the homepage of the Yet Another Project group,
-with links and informations about all other projects.
+About
+=====
 
-Current projects:
+See the homepage for details.
 
-- phpro-book
-- any usable projects implemented by our members (not those purely educational)
+TODO: link
 
-Queued for inclusion:
+Setting up
+==========
 
-- phpmeta
+Clone the project and setting it up for publishing:
+
+    git clone git@github.com:yet-another-project/yet-another-project.github.com.git
+    cd yet-another-project.github.com/
+    git co -b src origin/src
+    mv hooks/commit-msg .git/hooks/
+    install Phrozn
+
+To edit the website, edit files in `.phrozn/`, then commit the changes.
+They will be automatically published in the `master` branch.
+
+Do not forget to `git push` the changes.
